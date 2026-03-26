@@ -5,7 +5,9 @@
     box-sizing: border-box;
     color: white;
 }
-html, body {
+
+html,
+body {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -22,25 +24,53 @@ body {
     width: 100%;
 }
 
+.loader{
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    background: rgba(90, 70, 70, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+.spinner{
+    width: 60px;
+    height: 60px;
+    /* border: 6px solid #ddd; */
+    border-radius: 50%;
+    border-bottom: 6px dotted #628aa5;
+    /* border-left: 6px dotted #628aa5 ; */
+    animation: spin 1.5s ease-in-out infinite;
+}
+@keyframes spin {
+    to{
+        transform: rotate(360deg);
+    }
+}
+
 
 
 .citysearch {
-  width: 100%;
-  height: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 1rem;
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
 }
 
 input {
-  width: 100%;
-  max-width: 600px;
-  border: 1px solid gray;
-  background: none;
-  padding: 0.5rem 1rem;
-  border-radius: 30px;
-  color: white;
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid gray;
+    background: none;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    color: white;
 }
 
 
@@ -104,12 +134,13 @@ h1 {
     gap: 5%;
     position: absolute;
     right: 2%;
-    top: 18%;
+    top: 15%;
     z-index: 100;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
 .weekly .weeklyForecast {
-    height: 25rem;
+    height: 28rem;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -127,21 +158,24 @@ h1 {
 .weekly .weeklyForecast .weeklydata {
     width: 90%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-direction: row;
     flex-wrap: wrap;
 }
-.weekly .weeklyForecast .weeklydata .hourly{
+
+.weekly .weeklyForecast .weeklydata .hourly {
     width: 30%;
+    scroll-snap-align: start;
 }
 
 #weeklyTitle,
 #hourlyTitle {
     font-family: system-ui;
     margin-top: 5%;
+    font-size: 1.1rem;
 }
 
-.weekly .weeklyForecast .weeklydata .date{
+.weekly .weeklyForecast .weeklydata .date {
     font-weight: 500;
 }
 
@@ -154,20 +188,36 @@ h1 {
     gap: 7%;
     margin: 3% 0 0 3%;
     padding: 0 1rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
-#weather .hourlyforecast {
+#dailyScroll{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+#nextBtn, #prevBtn{
+    background: none;
+}
+button:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.hourlyforecast {
     height: 8rem;
     width: 80%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    flex-wrap: wrap;
     gap: 7%;
-    /* background-color: aqua; */
-    margin-left: 10%;
+    /* margin-left: 10%; */
     margin-top: 2%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
 }
 
 #hourlyTitle {
@@ -187,6 +237,22 @@ h1 {
 @media only screen and (max-width:1154px) {
     body {
         background-size: auto;
+    }
+}
+
+@media only screen and (max-width:1046px) {
+
+    .weeklydata p,
+    .hourly p {
+        font-size: 0.9rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    #loc {
+        font-size: 1.3rem;
     }
 }
 
@@ -231,7 +297,29 @@ h1 {
     }
 }
 
+@media only screen and (max-width:676px){
+    .weekly .weeklyForecast .weeklydata {
+        width: 40%;
+    }
+}
 
+@media only screen and (max-width:498px) {
+    h1 {
+        font-size: 2.1rem;
+    }
 
+    #loc {
+        font-size: 1.1rem;
+    }
 
-
+    #descrip, #humidity, #pressure {
+        font-size: 0.6rem;
+    }
+    #weather{
+        margin-top: 5%;
+    }
+    #hourlyTitle{
+        padding: 5%;
+        padding-bottom: 0;
+    }
+}

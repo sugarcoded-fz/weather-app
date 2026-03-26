@@ -7,6 +7,40 @@ let humidity = document.querySelector("#humidity");
 let pressure = document.querySelector("#pressure");
 const apiKey = "0uF8CVAb403K1SP0oDjiAxqe43KilFHd";
 let currentHour;
+let nextBtn = document.querySelector("#nextBtn");
+let prevBtn = document.querySelector("#prevBtn");
+let hourlyContainer = document.querySelector(".hourlyforecast");
+const scrollAmount = 100;
+
+function updateButtons(){
+    // handling previousButton
+    if(hourlyContainer.scrollLeft <=0){
+        prevBtn.disabled = true;
+    }
+    else{
+        prevBtn.disabled = false;
+    }
+    
+    // handling nextButton
+    if(hourlyContainer.scrollLeft + hourlyContainer.clientWidth >= hourlyContainer.scrollWidth){
+        nextBtn.disabled = true;
+    }
+    else{
+        nextBtn.disabled = false;
+    }
+}
+
+hourlyContainer.addEventListener("scroll", updateButtons);
+
+nextBtn.addEventListener("click",()=>{
+    hourlyContainer.scrollBy({left: scrollAmount, behavior:"smooth"});
+    setTimeout(updateButtons, 4000);
+});
+prevBtn.addEventListener("click",()=>{
+    hourlyContainer.scrollBy({left: -scrollAmount, behavior:"smooth"});
+    setTimeout(updateButtons, 4000);
+});
+
 
 
 const weatherDescriptions = {
@@ -47,7 +81,8 @@ const weatherIconMap = {
     5000: "icons/snow.png",
     8000: "icons/thunder.png",
     2000: "icons/fog.png",
-    1100: "icons/sun.png"
+    1100: "icons/sun.png",
+    4001: "icons/rain.png"
 };
 
 
@@ -161,7 +196,7 @@ function weeklyData() {
             let i = 0;
             const degree = '\u00B0';
             dailyForecasts.forEach(day => {
-                // console.log(day);
+                console.log(day);
                 const dayname = getDayName(day.time);
                 const tempMax = day.values.temperatureMax;
                 const tempMin = day.values.temperatureMin;
@@ -172,8 +207,10 @@ function weeklyData() {
                 dates[i].innerText = dayname;
                 temps[i].innerText = tempAvg + degree + "C";
                 conditions[i].innerHTML = "";
-                conditions[i].innerHTML = `<div style=" display: flex; flex-direction: row; gap:5%; "><div style="font-family:system-ui;">${weatherDescriptions[condition]}</div> <img src= ${openWeatherCode} alt="weather" style="width:30px; height:30px; margin-right:10px;"/></div>`;
+                conditions[i].innerHTML = `<div style=" display: flex; flex-direction: row; gap:0.5rem "><div style="font-family:system-ui;">${weatherDescriptions[condition]}</div> <img src= ${openWeatherCode} alt="weather" style="width:30px; height:30px; margin-right:10px;"/></div>`;
                 i++;
+                dates[0].innerText = "Today";
+                dates[1].innerText = "Tomorrow";
                 // console.log(`${date}: High ${tempMax}°C / Low ${tempMin}°C - Code ${condition}`);
             });
         })
@@ -212,7 +249,6 @@ function hourlyData(currentHour) {
     })
         .then(res => res.json())
         .then(data => {
-            // const hourly = data.timelines.hourly.slice(0, 6); // just 6 hours for example
             const container = document.querySelector("#weather");
             const hourly = data.timelines.hourly;
             const degree = '\u00B0';
@@ -220,9 +256,10 @@ function hourlyData(currentHour) {
             hourly.forEach(hour => {
                 let hourcount = hour.time.slice(11, 13);
                 // console.log(hour);
-                if ((hourcount > currentHour && i==0) || (i>0 && i<5)) {
+                if ((hourcount > currentHour - 3 && i == 0) || (i > 0)) {
                     // console.log(hourcount);
                     // console.log(currentHour);
+                    // console.log(i);
                     let time = hour.time;
                     // console.log(time);
                     let format12time = time.slice(11, 13);
@@ -238,28 +275,26 @@ function hourlyData(currentHour) {
                     }
 
                     const temp = hour.values.temperature;
-                    // const code = hour.values.weatherCode;
-                    // const openWeatherCode = weatherIconMap[code];
 
                     console.log(time);
                     hours[i].innerText = time;
                     htemps[i].innerText = temp + degree + "C";
+
+
+                    if (hourcount == currentHour) {
+                        hours[i].style.color = "#e4921fff";
+                        htemps[i].style.color = "#e4921fff";
+                        hours[i].style.opacity = "1";
+                        htemps[i].style.opacity = "1";
+                    }
+                    else if (i<=1) {
+                        hours[i].style.opacity = "0.7";
+                        htemps[i].style.opacity = "0.7";
+                    }
                     i++;
-                    // if(i===5)
-                    // {
-                    //     return;
-                    // }
-
-                    // const openWeatherCode = weatherIconMap[code];
-                    // const iconURL = `https://openweathermap.org/img/wn/${openWeatherCode}@2x.png`;
-
-
-                    // container.innerHTML = `<div style="margin:10px; display:flex; align-items:center;"><img src="${openWeatherCode}" alt="weather" style="width:40px; height:40px; margin-right:10px;" /><span><strong>${time}</strong>: ${temp}°C</span></div>`;
-
+                    updateButtons();
+                    document.querySelector(".loader").style.display ="none";
                 }
-                // else{
-                //     console.log("failed");
-                // }
             });
         })
         .catch(err => console.log("Weather error:", err));
@@ -300,25 +335,12 @@ let getData = async () => {
 
         weeklyData();
         hourlyData(currentHour);
-        // let formattedtime = localtime.toLocaleTimeString('en-GB', {
-        //     hour: '2-digit',
-        //     minute: '2-digit'
-        // });
-        // console.log(currentHour);
-        // console.log(formattedtime);
     }
     else {
         alert(data.message);
     }
 
 };
-
-
-
-
-
-
-
 
 
 

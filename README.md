@@ -19,4 +19,4 @@ A simple and responsive weather application that fetches real-time weather data 
 - HTML
 - CSS
 - JavaScript
-- [Tomorrow.io API] and [OpenWeatherMap] 
+- [Tomorrow.io API] and [OpenWeatherMap] git
