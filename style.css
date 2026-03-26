@@ -24,7 +24,7 @@ body {
     width: 100%;
 }
 
-.loader{
+.loader {
     position: fixed;
     left: 0;
     top: 0;
@@ -37,17 +37,17 @@ body {
     align-items: center;
     backdrop-filter: blur(5px);
 }
-.spinner{
+
+.spinner {
     width: 60px;
     height: 60px;
-    /* border: 6px solid #ddd; */
     border-radius: 50%;
     border-bottom: 6px dotted #628aa5;
-    /* border-left: 6px dotted #628aa5 ; */
     animation: spin 1.5s ease-in-out infinite;
 }
+
 @keyframes spin {
-    to{
+    to {
         transform: rotate(360deg);
     }
 }
@@ -75,25 +75,6 @@ input {
 
 
 
-/* .citysearch{
-    width: 100%;
-    height: 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: purple;
-    padding: 0 1rem;
-}
-input {
-    margin: 2% 0 0 25%;
-    width: 70%;
-    max-width: 100%;
-    outline: none;
-    border: 1px solid gray;
-    background: none;
-    padding: 1%;
-    border-radius: 30px;
-} */
 
 #loc {
     font-size: 1.7rem;
@@ -191,15 +172,18 @@ h1 {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
-#dailyScroll{
+#dailyScroll {
     display: flex;
     justify-content: space-around;
     width: 100%;
 }
-#nextBtn, #prevBtn{
+
+#nextBtn,
+#prevBtn {
     background: none;
 }
-button:disabled{
+
+button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
@@ -212,7 +196,6 @@ button:disabled{
     align-items: center;
     flex-direction: row;
     gap: 7%;
-    /* margin-left: 10%; */
     margin-top: 2%;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
@@ -297,7 +280,7 @@ button:disabled{
     }
 }
 
-@media only screen and (max-width:676px){
+@media only screen and (max-width:676px) {
     .weekly .weeklyForecast .weeklydata {
         width: 40%;
     }
@@ -312,13 +295,17 @@ button:disabled{
         font-size: 1.1rem;
     }
 
-    #descrip, #humidity, #pressure {
+    #descrip,
+    #humidity,
+    #pressure {
         font-size: 0.6rem;
     }
-    #weather{
+
+    #weather {
         margin-top: 5%;
     }
-    #hourlyTitle{
+
+    #hourlyTitle {
         padding: 5%;
         padding-bottom: 0;
     }
