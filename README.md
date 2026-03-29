@@ -19,4 +19,10 @@ A simple and responsive weather application that fetches real-time weather data 
 - HTML
 - CSS
 - JavaScript
-- [Tomorrow.io API] and [OpenWeatherMap] git
+- [Tomorrow.io API] and [OpenWeatherMap] api
+
+---
+
+##  Live Preview
+
+https://weather-app-fz.vercel.app/
