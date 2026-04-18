@@ -1,17 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const key = "69e63909fb6e55a180806cb7fe8a5954";
 const apiKey = "0uF8CVAb403K1SP0oDjiAxqe43KilFHd";
 
